@@ -1,5 +1,5 @@
 const Product=require("../models/productModel");
-const ErrorHandler=require("../utils/errorHandler");
+const ErrorHandler=require("../utils/errorhandler");
 const catchAsyncErrors=require("../middleware/catchAsynErrors");
 const ApiFeatures=require("../utils/apiFeatures");
 const cloudinary=require("cloudinary");
