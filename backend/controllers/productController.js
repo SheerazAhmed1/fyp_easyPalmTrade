@@ -1,7 +1,7 @@
 const Product=require("../models/productModel");
 const ErrorHandler=require("../utils/errorhandler");
 const catchAsyncErrors=require("../middleware/catchAsynErrors");
-const ApiFeatures=require("../utils/apiFeatures");
+const ApiFeatures=require("../utils/apifeatures");
 const cloudinary=require("cloudinary");
 
 //Create a new Product --admin / saler
