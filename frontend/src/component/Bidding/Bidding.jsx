@@ -88,8 +88,8 @@ const Bidding = () => {
         >
       
           {filteredProducts
-            .filter((item) => item.bidUser === user.user._id)
-            .map((product, index) => {
+            ?.filter((item) => item.bidUser === user.user._id)
+            ?.map((product, index) => {
               
               return (
                 (product.biddingExpiry != null) && ((!result?.includes(product._id)))&&
