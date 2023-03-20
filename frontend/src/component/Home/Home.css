@@ -73,7 +73,7 @@
   .productCard {
     width: 14vmax;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-decoration: none;
     color: rgb(48, 48, 48);
     margin: 2vmax;
@@ -117,7 +117,7 @@
     transform: translateY(-1vmax);
   }
   
-  @media screen and (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     .productCard > p {
       font-size: 1.7vmax;
     }
@@ -134,5 +134,6 @@
     .productCard > div > span {
       margin: 0 0.5vmax;
       font: 300 1vmax "Roboto";
+      width: min-content;
     }
   }

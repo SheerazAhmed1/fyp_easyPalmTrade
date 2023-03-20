@@ -14,7 +14,7 @@ import { addItemsToCart } from "../../actions/cartAction";
 const BiddingProductCard = ({ product}) => {
   const user = useSelector((state)=>state.user)
   const [bidPrice, setbidPrice] = useState(product.price);
-  const [bidFieldValue, setBidFieldValue] = useState(0);
+  const [bidFieldValue, setBidFieldValue] = useState(null);
   const alert = useAlert();
   const [time,setTime]=useState(remainingTime(product.biddingExpiry));
   
@@ -77,7 +77,7 @@ const BiddingProductCard = ({ product}) => {
 
   return (
    
-    <div className="productCard">
+    <div className="productBiddingCard">
       {console.log(product)}
       <img src={product?.images?.[0]?.url} alt={product?.name} />
       <p>{product.name}</p>

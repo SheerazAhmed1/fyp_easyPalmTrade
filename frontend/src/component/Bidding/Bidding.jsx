@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Button, FormControlLabel, Switch } from "@mui/material";
 import "./bidding.css";
+import "./productBiddingCard.css";
 import { clearErrors, getAdminProduct } from "../../actions/productAction";
 
 import BiddingProductCard from "./productBiddingCard";
@@ -19,17 +20,20 @@ const Bidding = () => {
   const alert = useAlert();
   const user = useSelector((state) => state.user);
   const myAllOrders=useSelector((state)=>state.myOrders);
+  const [errorDisplayed, setErrorDisplayed] = useState(false);
 
   useEffect(() => {
-    if (error) {
+    if (error && !errorDisplayed) {
       alert.error(error);
       dispatch(clearErrors());
+      setErrorDisplayed(true);
     }
 
     dispatch(getAdminProduct());
     dispatch(myOrders())
-  }, [dispatch, error, alert]);
+  }, [dispatch, error, alert,errorDisplayed]);
 
+ 
 
   //Have to Change Here
   const chekCartItems=()=>{
@@ -37,7 +41,7 @@ const Bidding = () => {
     const cartItems= JSON.parse(cartObj);
     console.log(cartItems);
     // console.log(cartItems);
-    const newFilteredProduct=filteredProducts?.filter((item) => item.bidUser === user.user._id);
+    const newFilteredProduct=filteredProducts?.filter((item) => item.bidUser === user?.user?._id);
     
 
     const finalfilteredProductsIds=cartItems?.map((item)=>item.product);
@@ -51,7 +55,7 @@ const Bidding = () => {
   }
 
   const filteredProducts = products?.filter((product) => product.isForBidding);
-  console.log(filteredProducts);
+  console.log("Filtered Products",filteredProducts);
  console.log("chekCaritems:",chekCartItems());
  const result = chekCartItems();
  console.log(result)

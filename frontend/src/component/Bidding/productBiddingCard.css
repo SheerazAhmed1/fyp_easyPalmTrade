@@ -1,0 +1,79 @@
+.productBiddingCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2vmax;
+    padding: 2vmax;
+    border: 1px solid rgba(0, 0, 0, 0.171);
+    border-radius: 4px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    max-width: 20rem;
+  }
+  
+  .productBiddingCard img {
+    width: 100%;
+    max-height: 10rem;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .productBiddingCard p {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  
+  .productBiddingCard span {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  
+  .productBiddingCard div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  
+  .productBiddingCard button {
+    margin-left: 1rem;
+  }
+  
+  .productBiddingCard input[type="number"] {
+    width: 10rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .productBiddingCard input[type="number"]:focus {
+    outline: none;
+    border: 1px solid #0077ff;
+  }
+  
+  .productBiddingCard label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-right: 1rem;
+  }
+  
+  .productBiddingCard button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    background-color: #0077ff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .productBiddingCard button:hover {
+    background-color: #005ce6;
+  }

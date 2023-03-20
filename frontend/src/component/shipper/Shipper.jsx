@@ -414,7 +414,7 @@ console.log("newFilteredProducts :" ,newfilteredOrders);
 
 </div>
 
-<div class="ordertableContainer">
+<div className="ordertableContainer">
 <DataGrid
             rows={rows}
             columns={columns}

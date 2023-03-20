@@ -82,6 +82,7 @@ const LoginSignUp = ({history,location}) => {
       }
 
       const redirect=location.search?location.search.split("=")[1]: "/";
+      const role = useSelector((state)=>state?.user?.user?.role);
 
       useEffect(() => {
         
@@ -91,7 +92,15 @@ const LoginSignUp = ({history,location}) => {
       }
       
       if(isAuthenticated){
-        history.push(redirect)
+        if(role ==="shipper" && role!==undefined){
+            history.push("/shipper");
+        }
+        else{
+            history.push(redirect)
+        }
+        
+        
+
       }
 
       }, [dispatch,error,alert,history,isAuthenticated,redirect]);
@@ -197,7 +206,7 @@ const LoginSignUp = ({history,location}) => {
                     <p>Register as:</p>
                     <select defaultValue='buyer' ref={selectRoleRef}>
                         <option value="buyer">Buyer</option>
-                        <option value="saler">Saler</option>
+                        <option value="seller">Seller</option>
                         <option value="shipper">Shipper</option>
                     </select>
                     </div>

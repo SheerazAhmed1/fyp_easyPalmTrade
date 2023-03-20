@@ -95,7 +95,7 @@ const {data} = await axios.get("/api/v1/stripeapikey");
     <Route exact path="/cart" component={Cart}/>
 
     <ProtectedRoute exact path="/shipping" component={Shipping} />
-    <Route exact path="/shipper" component={Shipper} />
+    <ProtectedRoute exact path="/shipper" component={Shipper} />
     <Route exact path="/bidding" component={Bidding}/>
     
 

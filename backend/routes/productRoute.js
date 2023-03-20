@@ -9,7 +9,7 @@ router.route("/products").get(getAllproducts);
 
 router
   .route("/admin/products")
-  .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts);
+  .get(isAuthenticatedUser, authorizeRoles("admin","seller","buyer",), getAdminProducts);
 
 router.route("/admin/product/new")
 .post(isAuthenticatedUser, authorizeRoles("admin"),createProduct);

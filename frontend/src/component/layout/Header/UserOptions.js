@@ -25,7 +25,7 @@ const UserOptions = ({user}) => {
         {icon:<MdExitToApp/>,name:"Logout",func:logoutUser}
     ]
 
-    if(user.role==="admin"){
+    if(user.role==="admin" || user.role==="seller"){
         options.unshift( {icon:<MdDashboard/>,name:"Dashboard",func:dashboard})
     }
 
@@ -53,6 +53,12 @@ const UserOptions = ({user}) => {
     function logoutUser(){
        dispatch(logout());
         alert.success("Logout Successfully");
+        console.log("history:",history);
+
+        if(history.location.pathname=="/bidding"){
+        history.push("/login");
+
+        }
     }
 
 
