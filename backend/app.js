@@ -6,8 +6,10 @@ const bodyParser=require("body-parser");
 const fileUpload=require("express-fileupload");
 
 const path = require("path");
-
-require("dotenv").config ({path:"backend/config/config.env"});
+//config
+if(process.env.NODE_ENV !== "PRODUCTION"){
+  require("dotenv").config ({path:"backend/config/config.env"});
+}
 app.use(express.json({limit:'50mb'}));    
 app.use(cookieparser());
 app.use(bodyParser.urlencoded({extended: true}));
