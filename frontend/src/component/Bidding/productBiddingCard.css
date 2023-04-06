@@ -111,11 +111,11 @@
     }
   
     .productBiddingCard p {
-      font-size: 24px;
+      font-size: 1.7vmax;
     }
   
     .productBiddingCard span {
-      font-size: 28px;
+      font-size: 1.5vmax;
       margin-bottom: 0;
       margin-right: 32px;
     }
