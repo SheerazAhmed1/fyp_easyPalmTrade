@@ -80,18 +80,19 @@ const BiddingProductCard = ({ product}) => {
     <div className="productBiddingCard">
       {console.log(product)}
       <img src={product?.images?.[0]?.url} alt={product?.name} />
-      <p>{product.name}</p>
+      <p className="productName">{product.name}</p>
 
       <p>{calcDays(product.biddingExpiry)>0 ? "Time Left :"+calcDays(product.biddingExpiry)+ " Days":(timeCheck(product.biddingExpiry)!==0?"Time Left :"+time:"Bidding is Closed")} </p>
       <span>Current Bid : {`Rs.${bidPrice}`}</span>
-      <div>
+      <div className="textField">
         <TextField
+        
           value={bidFieldValue}
           label="Input Amount To Bid"
           id="outlined-start-adornment"
           size="small"
           type="Number"
-          sx={{ m: 1, width: "20ch" }}
+          
           onChange={(e) => setBidFieldValue(e.target.value)}
           InputProps={{
               startAdornment: (
@@ -102,7 +103,7 @@ const BiddingProductCard = ({ product}) => {
         <Button onClick={handleClick}>Bid</Button>
       </div>
       {(timeCheck(product.biddingExpiry)===0 &&product?.bidUser===user?.user?._id)&&
-        <Button onClick={handleSubmit}>Add to Cart</Button>
+        <Button className="buttonaddtoCart" onClick={handleSubmit}>Add to Cart</Button>
       }
     </div>
   );

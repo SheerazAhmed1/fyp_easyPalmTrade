@@ -1,55 +1,69 @@
 .productBiddingCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 2vmax;
-    padding: 1vmax;
-    border: 1px solid rgba(0, 0, 0, 0.171);
-    border-radius: 4px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-    text-align: center;
-    max-width: 20rem;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
+  width: 21vmax;
+  height: 30vmax;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  color: rgb(48, 48, 48);
+  margin: 2vmax;
+  transition: all 0.5s;
+  padding-bottom: 0.5vmax;
+  padding-top: 0.2vmax;
+  flex-wrap: wrap;
+  justify-content: center;
+  }
+  .productName{
+   font-size: 15px;
   }
   
   .productBiddingCard img {
-    width: 100%;
+    width: 14vmax;
     max-height: 10rem;
     object-fit: contain;
     margin-bottom: 1rem;
+   
   }
   
   .productBiddingCard p {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-family: "Roboto";
+    font-size: 1.2vmax;
+    margin: 1vmax 0.5vmax;
+    margin-bottom: 0;
   }
   
   .productBiddingCard span {
-    margin: 1rem 0;
-    font-size: 1.2rem;
-    font-weight: 500;
+    margin: 0.5vmax;
+    color: rgb(40, 37, 37);
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-size: 1vmax;
   }
   
   .productBiddingCard div {
+    margin: 0.2vmax;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    margin: 1rem 0;
   }
   
-  .productBiddingCard button {
-    margin-left: 1rem;
-  }
+ 
   
   .productBiddingCard input[type="number"] {
-    width: 10rem;
+    width: 10vmax;
     padding: 0.5rem;
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 4px;
     font-size: 1rem;
     font-weight: 400;
     text-align: center;
+    
+  }
+  .productBiddingCard div div div {
+    margin-left: auto;
   }
   
   .productBiddingCard input[type="number"]:focus {
@@ -77,45 +91,43 @@
   .productBiddingCard button:hover {
     background-color: #005ce6;
   }
+  .textField{
+    width: 20vmax;
+  }
 
-  @media (max-width: 1000px) {
+  @media only screen and (max-width: 1080px) {
+    
     .productBiddingCard {
-      margin: 1vmax;
-      padding: 0.5vmax;
-      max-width: 100%;
+      
+      height: 30vmax;
+      
+     
     }
-    
+  
     .productBiddingCard img {
-      max-height: 7rem;
-      margin-bottom: 0.5rem;
+      width: 14vmax;;
+      margin-bottom: 0;
+      margin-right: 32px;
     }
-    
+  
     .productBiddingCard p {
-      font-size: 1rem;
+      font-size: 24px;
     }
-    
+  
     .productBiddingCard span {
-      margin: 0.5rem 0;
-      font-size: 1rem;
+      font-size: 28px;
+      margin-bottom: 0;
+      margin-right: 32px;
     }
-    
+  
     .productBiddingCard div {
-      margin: 0.5rem 0;
+      align-items: flex-start;
     }
-    
-    .productBiddingCard input[type="number"] {
-      width: 8rem;
-      padding: 0.25rem;
-      font-size: 0.9rem;
-    }
-    
-    .productBiddingCard label {
-      font-size: 1rem;
-      margin-right: 0.5rem;
-    }
-    
+  
     .productBiddingCard button {
-      padding: 0.25rem 0.75rem;
-      font-size: 0.9rem;
+      width: auto;
+      align-self: center;
     }
+   
+    
   }

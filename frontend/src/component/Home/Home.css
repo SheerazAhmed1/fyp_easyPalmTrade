@@ -117,7 +117,7 @@
     transform: translateY(-1vmax);
   }
   
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1080px) {
     .productCard > p {
       font-size: 1.7vmax;
     }
@@ -135,5 +135,14 @@
       margin: 0 0.5vmax;
       font: 300 1vmax "Roboto";
       width: min-content;
+    }
+    .container{
+      
+      
+      padding: 0;
+    }
+    .productCard{
+      margin: 0;
+      max-width: fit-content;
     }
   }
