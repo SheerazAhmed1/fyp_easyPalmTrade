@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material'
+import { Autocomplete,  TextField } from '@mui/material'
 import React, { useEffect, useRef, useState ,Fragment} from 'react'
 import './shipper.css'
 import { useAlert } from "@blaumaus/react-alert";
@@ -265,6 +265,9 @@ const Shipper = () => {
 const dispatch=useDispatch();
 const alert=useAlert();
 const [accepted, setAccepted] = useState(false);
+const refer=useRef()
+const [select, setSelect] = useState([]);
+const [filteredOrders, setFilteredOrders] = useState([]);
 
 const {orders } = useSelector((state) => state.allOrders);
 
@@ -298,8 +301,14 @@ const columns = [
     field: "shippingPrice",
     headerName: "Shipping Price",
     type: "number",
-    minWidth: 270,
+    minWidth: 150,
     flex: 0.5,
+  },
+  {field: "TotalPrice",
+  headerName:"Total Price",
+  type: "number",
+  minWidth: 150,
+  flex: 0.5,
   },
   {
     field: "actions",
@@ -340,10 +349,14 @@ let newfilteredOrders=[];
 
 const handleClick = ()=>{
 
-  
-  newfilteredOrders=orders.filter(order=>select.includes(order.shippingInfo.city));
 
- console.log("city:",orders[0].shippingInfo.city);
+
+  const filteredOrders = orders.filter((order) => select.toString().toLowerCase().includes(order.shippingInfo.city.toLowerCase()));
+
+
+    setFilteredOrders(filteredOrders);
+
+ console.log("filtered orders using state :",filteredOrders);
   
 
 
@@ -355,6 +368,21 @@ const handleClick = ()=>{
 
 const rows =[];
 
+if(filteredOrders.length!=0){
+  filteredOrders.forEach((item) => {
+    rows.push({
+      id:item._id,
+      address: item.shippingInfo.address,
+      city:item.shippingInfo.city,
+      itemsQty: item.orderItems.length,
+      shippingPrice: item.shippingPrice,
+      TotalPrice: item.totalPrice,
+      orderStatus:item.orderStatus,
+    });
+  });
+}
+else{
+
 orders &&
 orders.forEach((item) => {
   rows.push({
@@ -363,23 +391,28 @@ orders.forEach((item) => {
     city:item.shippingInfo.city,
     itemsQty: item.orderItems.length,
     shippingPrice: item.shippingPrice,
+    TotalPrice: item.totalPrice,
     orderStatus:item.orderStatus,
   });
 });
 
+}
+
+
+
 console.log("Rows",rows)
 
-const refer=useRef()
-const [select, setSelect] = useState([]);
+
     
 
 const onSelectChange = (event, values)=>{
 
-  setSelect(values)
+  setSelect(values);
+  
 
 }
 
-console.log("newFilteredProducts :" ,newfilteredOrders);
+
 
 
 
@@ -401,12 +434,13 @@ console.log("newFilteredProducts :" ,newfilteredOrders);
             variant="standard"
             label="Cities"
             placeholder="City"
+            style={{ width:300 }}
           />
         )}
       />
       <input
                   type="submit"
-                  value="submit"
+                  value="Search"
                   className="submitCities"
                   onClick={handleClick}
                 />

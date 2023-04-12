@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react'
 import"./Header.css";
-import { SpeedDial,SpeedDialAction ,Backdrop} from '@mui/material';
+import { SpeedDial,SpeedDialAction ,Backdrop, Typography} from '@mui/material';
 import { MdDashboard,MdPerson,MdExitToApp,MdList,MdViewList,MdShoppingCart,MdStore} from 'react-icons/md';
 import {useHistory} from "react-router-dom"
 import{useAlert} from "@blaumaus/react-alert"
 import {logout} from "../../../actions/userActions"
 import { useDispatch,useSelector} from"react-redux";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
  
 const UserOptions = ({user}) => {
 
@@ -29,6 +30,10 @@ const UserOptions = ({user}) => {
         options.unshift( {icon:<MdDashboard/>,name:"Dashboard",func:dashboard})
     }
 
+    if(user.role==="shipper"){
+        options.unshift( {icon:<LocalShippingIcon/>,name:"Shipping",func:shipments});
+    }
+
     function dashboard(){
         history.push("/admin/dashboard");
     }
@@ -37,6 +42,9 @@ const UserOptions = ({user}) => {
         history.push("/orders");
     }
 
+    function shipments(){
+        history.push("/shipper");
+    }
 
     function account(){
         history.push("/account");
@@ -98,6 +106,8 @@ const UserOptions = ({user}) => {
 
            
             </SpeedDial>
+
+           
     </Fragment>
   )
 }
