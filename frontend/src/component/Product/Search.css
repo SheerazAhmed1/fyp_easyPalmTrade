@@ -42,7 +42,7 @@
     background-color: rgb(55, 97, 214);
   }
   
-  @media screen and (max-width: 600px) {
+  @media only screen and (max-width: 1080px) {
     .searchBox > input[type="text"] {
       width: 100%;
       font: 300 4vw cursive;

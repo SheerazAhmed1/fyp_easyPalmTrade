@@ -26,7 +26,7 @@
     margin: 2vmax;
   }
   
-  @media screen and (max-width: 600px) {
+  @media only screen and (max-width: 1080px) {
     .orderSuccess > a {
       padding: 3vw 6vw;
       font: 400 4vw "Roboto";

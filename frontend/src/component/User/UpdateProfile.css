@@ -110,7 +110,7 @@
     background-color: rgb(179, 66, 46);
   }
   
-  @media screen and (max-width: 600px) {
+  @media only screen and (max-width: 1080px) {
     .updateProfileContainer {
       background-color: white;
     }

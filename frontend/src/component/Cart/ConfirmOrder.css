@@ -124,7 +124,7 @@
     background-color: rgb(192, 71, 50);
   }
   
-  @media screen and (max-width: 600px) {
+  @media only screen and (max-width: 1080px) {
     .confirmOrderPage {
       grid-template-columns: 1fr;
       height: unset;
