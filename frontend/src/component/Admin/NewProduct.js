@@ -13,6 +13,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { formatDateToDateTimeLocal } from "../../helpers";
+import{createBiddingDetail} from "../../actions/biddingAction";
 
 const NewProduct = ({ history }) => {
   const dispatch = useDispatch();
@@ -71,7 +72,12 @@ const NewProduct = ({ history }) => {
     images.forEach((image) => {
       myForm.append("images", image);
     });
-    dispatch(createProduct(myForm));
+      dispatch( createProduct(myForm));
+     
+    //  if (isForBidding) {
+    //   dispatch(createBiddingDetail())
+
+    //  }
   };
 
   const createProductImagesChange = (e) => {

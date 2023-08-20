@@ -18,6 +18,7 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import EventIcon from "@mui/icons-material/Event";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { createOrder, clearErrors } from "../../actions/orderAction";
+import { updateProduct } from "../../actions/productAction";
 
 const Payment = ({ history }) => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -45,6 +46,11 @@ const Payment = ({ history }) => {
     totalPrice: orderInfo.totalPrice,
     
   };
+
+
+  
+
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -85,7 +91,7 @@ const Payment = ({ history }) => {
           },
         },
       });
-
+      
       if (result.error) {
         payBtn.current.disabled = false;
 
@@ -98,6 +104,10 @@ const Payment = ({ history }) => {
           };
 
           dispatch(createOrder(order));
+          order.orderItems.forEach(element => {
+            dispatch(updateProduct(element.product,{isSold: true}));
+          });
+          
           localStorage.removeItem("cartItems");
           history.push("/success");
         } else {

@@ -95,6 +95,11 @@
     width: 20vmax;
   }
 
+  .pName{
+    display: flex;
+    flex-direction: column;
+  }
+
   @media only screen and (max-width: 1080px) {
     
     .productBiddingCard {

@@ -6,6 +6,9 @@ import { profileReducer } from "./reducers/userReducer";
 import { userReducer,forgotPasswordReducer,allUsersReducer, userDetailsReducer,} from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { newOrderReducer ,myOrdersReducer,orderDetailsReducer,allOrdersReducer,orderReducer,} from "./reducers/orderReducer";
+import { 
+  // addNewBidUser,
+   biddingDetailsReducer } from "./reducers/biddingReducer";
 /*import {
   newProductReducer,
   newReviewReducer,
@@ -85,6 +88,8 @@ const reducer=combineReducers({
   userDetails: userDetailsReducer,
   productReviews: productReviewsReducer,
   review: reviewReducer,
+  biddingProduct: biddingDetailsReducer,
+  // addNewReducer: addNewBidUser,
 });
 
 const initialState={

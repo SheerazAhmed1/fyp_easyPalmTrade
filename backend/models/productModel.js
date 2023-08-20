@@ -27,6 +27,15 @@ const productSchema = new mongoose.Schema({
     type: String,
     
   },
+  bidAccepted_id: {
+    type: String,
+    default:null,
+  },
+  isSold:{
+    type: Boolean,
+  }
+
+  ,
   biddingExpiry: {
     type: Date,
   },

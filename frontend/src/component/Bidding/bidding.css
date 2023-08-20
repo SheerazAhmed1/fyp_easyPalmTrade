@@ -1,6 +1,13 @@
 
- 
-  
+  .pageContent {
+    margin: 6rem 0;
+  }
+
+  .biddersTable{
+    /* width: 100vh; */
+    padding: 0 4rem ;
+    margin: 2rem 0;
+  }
 
   
   .productCard {

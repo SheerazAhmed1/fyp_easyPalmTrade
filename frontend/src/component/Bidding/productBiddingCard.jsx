@@ -6,14 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { calcDays, remainingTime, timeCheck } from "../../helpers";
 import { useHistory } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
-
-
+import {Link} from "react-router-dom";
+import { createNewBidder } from '../../actions/biddingAction';
 
 
 
 const BiddingProductCard = ({ product}) => {
   const user = useSelector((state)=>state.user)
+  
   const [bidPrice, setbidPrice] = useState(product.price);
+ 
   const [bidFieldValue, setBidFieldValue] = useState(null);
   const alert = useAlert();
   const [time,setTime]=useState(remainingTime(product.biddingExpiry));
@@ -21,21 +23,27 @@ const BiddingProductCard = ({ product}) => {
   const history=useHistory();
 
   const dispatch=useDispatch();
-  const handleClick = () => {
-    if (bidFieldValue >= product.price && timeCheck(product.biddingExpiry)>0) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (bidFieldValue >= product.price && timeCheck(product.biddingExpiry)>0 && user?.user?.role!=="seller") {
       setbidPrice(bidFieldValue);
       const myForm = new FormData();
       myForm.set("price",bidFieldValue);
-      console.log(user.user)
       myForm.set("bidUser",user?.user?._id)
-      dispatch(updateProduct(product._id, myForm));
+      dispatch(updateProduct(product?._id, myForm));
+      dispatch(createNewBidder({   
+        "product_id": product?._id,
+        "bidder_id" : user?.user?._id,
+        "bidAmount": bidFieldValue,
+    })) 
     } else {
-      alert.error("Bid should be greater then Current Bid" );
+      alert.info("Bid should be greater then Current Bid");
     }
   };
 
 
-  const handleSubmit=()=>{
+  const handleSubmit=(e)=>{
+    e.preventDefault();
 /*
   // Define an object to store in local storage
     const productObj = JSON.stringify(product);
@@ -72,27 +80,29 @@ const BiddingProductCard = ({ product}) => {
       clearInterval(intervalId);
 
     };
-  }, []);
+  }, [dispatch,alert]);
 
 
   return (
-   
-    <div className="productBiddingCard">
-      {console.log(product)}
-      <img src={product?.images?.[0]?.url} alt={product?.name} />
-      <p className="productName">{product.name}</p>
 
+    <Link className='biddingCard' to={`/bidding/${product._id}`}>
+    <div className="productBiddingCard">
+      <img src={product?.images?.[0]?.url} alt={product?.name} />
+      <div className="pName">
+        <p className="productName">{product.name}</p>
+         
       <p>{calcDays(product.biddingExpiry)>0 ? "Time Left :"+calcDays(product.biddingExpiry)+ " Days":(timeCheck(product.biddingExpiry)!==0?"Time Left :"+time:"Bidding is Closed")} </p>
+      </div>
       <span>Current Bid : {`Rs.${bidPrice}`}</span>
       <div className="textField">
         <TextField
-        
+
           value={bidFieldValue}
           label="Input Amount To Bid"
           id="outlined-start-adornment"
           size="small"
           type="Number"
-          
+          onClick={(e)=>{e.preventDefault();}}
           onChange={(e) => setBidFieldValue(e.target.value)}
           InputProps={{
               startAdornment: (
@@ -100,12 +110,13 @@ const BiddingProductCard = ({ product}) => {
                   ),
                 }}
         />
-        <Button onClick={handleClick}>Bid</Button>
+        <Button onClick={(e)=>handleClick(e)}>Bid</Button>
       </div>
       {(timeCheck(product.biddingExpiry)===0 &&product?.bidUser===user?.user?._id)&&
         <Button className="buttonaddtoCart" onClick={handleSubmit}>Add to Cart</Button>
       }
     </div>
+    </Link>
   );
 };
 

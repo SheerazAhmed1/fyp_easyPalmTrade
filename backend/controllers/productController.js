@@ -58,7 +58,7 @@ exports.getAllproducts= catchAsyncErrors( async(req,res,next)=>{
 
 
     const products = await apiFeature.query;
-
+  
     res.status(200).json({
         success:true,
         products,

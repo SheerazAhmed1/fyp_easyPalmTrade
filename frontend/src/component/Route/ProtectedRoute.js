@@ -16,7 +16,8 @@ const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
               return <Redirect to="/login" />;
             }
             
-            if (isAdmin === true && user?.role !== "admin") {
+            //for dasboard the seller is added here.
+            if (isAdmin === true && user?.role !== "admin" && user.role !== "seller") {
               return <Redirect to="/login" />;
             }
 

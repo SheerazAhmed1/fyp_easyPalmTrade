@@ -41,6 +41,7 @@ import UpdateUser from "./component/Admin/UpdateUser.js";
 import ProductReviews from "./component/Admin/ProductReviews.js";
 import Shipper from "./component/shipper/Shipper.jsx";
 import Bidding from "./component/Bidding/Bidding.jsx";
+import BiddingItem from "./component/Bidding/BiddingItem.jsx";
 
 function App() {
 
@@ -97,6 +98,7 @@ const {data} = await axios.get("/api/v1/stripeapikey");
     <ProtectedRoute exact path="/shipping" component={Shipping} />
     <ProtectedRoute exact path="/shipper" component={Shipper} />
     <Route exact path="/bidding" component={Bidding}/>
+    <Route exact path="/bidding/:id" component={BiddingItem}/>
     
 
     

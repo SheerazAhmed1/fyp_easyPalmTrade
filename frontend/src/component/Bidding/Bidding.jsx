@@ -3,6 +3,7 @@ import { useAlert } from "@blaumaus/react-alert";
 import "../Admin/productList.css";
 import { useSelector, useDispatch } from "react-redux";
 
+
 import { Box, Button, FormControlLabel, Switch } from "@mui/material";
 import "./bidding.css";
 import "./productBiddingCard.css";
@@ -11,7 +12,8 @@ import { clearErrors, getAdminProduct } from "../../actions/productAction";
 import BiddingProductCard from "./productBiddingCard";
 
 import {  timeCheck } from "../../helpers";
-import { myOrders } from "../../actions/orderAction";
+import { getAllOrders, myOrders } from "../../actions/orderAction";
+import { getBiddingDetails } from "../../actions/biddingAction";
 
 const Bidding = () => {
   const dispatch = useDispatch();
@@ -19,7 +21,8 @@ const Bidding = () => {
   const [myBiddings, setMyBiddings] = useState(false);
   const alert = useAlert();
   const user = useSelector((state) => state.user);
-  const myAllOrders=useSelector((state)=>state.myOrders);
+  
+  const biddingDetails=useSelector((state)=>state.biddingProduct.biddingDetails);
   const [errorDisplayed, setErrorDisplayed] = useState(false);
 
   useEffect(() => {
@@ -30,7 +33,8 @@ const Bidding = () => {
     }
 
     dispatch(getAdminProduct());
-    dispatch(myOrders())
+    dispatch(getBiddingDetails())
+    
   }, [dispatch, error, alert,errorDisplayed]);
 
  
@@ -39,29 +43,48 @@ const Bidding = () => {
   const chekCartItems=()=>{
     const cartObj= localStorage.getItem("cartItems")
     const cartItems= JSON.parse(cartObj);
-    console.log(cartItems);
     // console.log(cartItems);
     const newFilteredProduct=filteredProducts?.filter((item) => item.bidUser === user?.user?._id);
     
 
     const finalfilteredProductsIds=cartItems?.map((item)=>item.product);
-    console.log("THis is  new filteered product :" , newFilteredProduct);
-    console.log("THis is  final filteered product ids are  :" , finalfilteredProductsIds);
     //let result = finalfilteredProducts.map(a => a._id);
+
+   
     
 
       
    return finalfilteredProductsIds;
   }
 
-  const filteredProducts = products?.filter((product) => product.isForBidding);
-  console.log("Filtered Products",filteredProducts);
- console.log("chekCaritems:",chekCartItems());
+  const filteredProducts = products?.filter((product) => product.isForBidding && !product.isSold);
+  console.log(filteredProducts);
+  
+
+  let buyerProducts = []
+  if(user?.user?.role == 'buyer'){
+    const productIds = biddingDetails?.filter(product => product.bidUsers.map(user => user.bidder_id).includes(user?.user?._id))
+    .map((bd => bd.product_id))
+    buyerProducts = filteredProducts?.filter((product) => productIds.includes(product._id))
+  }
+
+  const userProducts =
+    user.user?.role == "seller"
+      ? filteredProducts?.filter((product) => product.user == user?.user?._id)
+      : user.user?.role == "buyer"
+      ? buyerProducts
+      : filteredProducts;
+
+
+
+  const renderProducts = myBiddings ? userProducts : filteredProducts.filter(product => timeCheck(product.biddingExpiry) !== 0 );
+
+
+//   console.log("Filtered Products",filteredProducts);
+//  console.log("chekCaritems:",chekCartItems());
  const result = chekCartItems();
- console.log(result)
+//  console.log(result)
   return (
-    /*
-     */
     <div>
       <div
         style={{
@@ -85,15 +108,22 @@ const Bidding = () => {
           label={myBiddings ? "My Bidding Products" : "All Bidding Products"}
         />
       </div>
-          
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}
+      >
+        {renderProducts?.map((product, index) => {
+          return (
+              <BiddingProductCard key={index +'_'+ product._id} product={product} />
+          );
+        })}
+      </Box>
+      {/*           
       {myBiddings ? (
         <Box
           sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}
         >
       
-          {filteredProducts
-            ?.filter((item) => item.bidUser === user.user._id)
-            ?.map((product, index) => {
+          {renderProducts?.map((product, index) => {
               
               return (
                 (product.biddingExpiry != null) && ((!result?.includes(product._id)))&&
@@ -107,8 +137,8 @@ const Bidding = () => {
         <Box
           sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}
         >
-          {filteredProducts?.map((product, index) => {
-            console.log("timeCheck", timeCheck(product.biddingExpiry));
+          {renderProducts?.map((product, index) => {
+            // console.log("timeCheck", timeCheck(product.biddingExpiry));
             return (
               product.biddingExpiry != null &&
               timeCheck(product.biddingExpiry) !== 0 && (
@@ -117,7 +147,7 @@ const Bidding = () => {
             );
           })}
         </Box>
-      )}
+      )} */}
     </div>
   );
 };

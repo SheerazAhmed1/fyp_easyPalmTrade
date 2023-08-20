@@ -12,10 +12,10 @@ router
   .get(isAuthenticatedUser, authorizeRoles("admin","seller","buyer",), getAdminProducts);
 
 router.route("/admin/product/new")
-.post(isAuthenticatedUser, authorizeRoles("admin"),createProduct);
+.post(isAuthenticatedUser, authorizeRoles("admin","seller"),createProduct);
 
 router.route("/admin/product/:id")
-.put(isAuthenticatedUser ,authorizeRoles("admin","shipper"),updateProduct)
+.put(isAuthenticatedUser ,authorizeRoles("admin","shipper","seller","buyer"),updateProduct)
 .delete(isAuthenticatedUser ,authorizeRoles("admin"),deleteProduct)
 
 

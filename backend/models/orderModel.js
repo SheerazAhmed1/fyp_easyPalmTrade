@@ -97,6 +97,10 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: "Processing",
   },
+  shipperid: {
+    type: String,
+    default: null,
+  },
   deliveredAt: Date,
   createdAt: {
     type: Date,

@@ -97,6 +97,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     });
   }
   order.orderStatus = req.body.status;
+  order.shipperid = req.body.shipperid;
 
   if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();

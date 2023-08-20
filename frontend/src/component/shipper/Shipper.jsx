@@ -268,8 +268,9 @@ const [accepted, setAccepted] = useState(false);
 const refer=useRef()
 const [select, setSelect] = useState([]);
 const [filteredOrders, setFilteredOrders] = useState([]);
-
+const{user:currentUser}=useSelector((state) => state.user);
 const {orders } = useSelector((state) => state.allOrders);
+
 
 useEffect(() => {
   
@@ -278,9 +279,17 @@ useEffect(() => {
   
 }, [])
 
+console.log(orders,"orders");
+ const accpetedOrders=orders?.filter(order => order.shipperid !==null && order.shipperid == currentUser._id);
+ console.log("accpetedOrders",accpetedOrders);
+const notAcceptedOrders=orders?.filter(order => order.shipperid===null);
+console.log("notAcceptedOrders",notAcceptedOrders);
+
+
+
 //DATAGRID CODE
 
-const columns = [
+const notAcceptedColumns = [
   { field: "address", headerName: "Address", minWidth: 300, flex: 1 },
 
   {
@@ -318,32 +327,115 @@ const columns = [
     type: "number",
     sortable: false,
     renderCell: (params) => {
-      console.log(params, "PARAMS CONSOLE");
+      
       return (
         <Fragment>
-          {params.row.orderStatus == 'Shipped'
-            ? <div>Accepted</div>
-            : <Button
+          
+            {params.row.shipperid== null &&
+             <Button
+              variant='contained'
+              
+
             onClick={() =>{
               const myForm = new FormData();
 
-              myForm.set("status", "Shipped");
+              
+              const data = {
+                "status": "Shipped",
+                "shipperid": currentUser?._id,
+              }
           
-              dispatch(updateOrder(params.id, myForm));
+              dispatch(updateOrder(params.id, data));
   
               dispatch(getAllOrders())
              
             }}
           >
-            Accept
+          Accept
           </Button>
-          }
-          
+    }
         </Fragment>
       );
     },
   }
 ];
+
+
+const acceptedColumns = [
+  { field: "address", headerName: "Address", minWidth: 300, flex: 1 },
+
+  {
+    field: "city",
+    headerName: "City",
+    minWidth: 150,
+    flex: 0.5,
+  },
+  {
+    field: "itemsQty",
+    headerName: "Items Qty",
+    type: "number",
+    minWidth: 150,
+    flex: 0.4,
+  },
+
+  {
+    field: "shippingPrice",
+    headerName: "Shipping Price",
+    type: "number",
+    minWidth: 150,
+    flex: 0.5,
+  },
+  {field: "TotalPrice",
+  headerName:"Total Price",
+  type: "number",
+  minWidth: 150,
+  flex: 0.5,
+  },
+  {
+    field: "actions",
+    flex: 0.3,
+    headerName: "Actions",
+    minWidth: 150,
+    type: "number",
+    sortable: false,
+    renderCell: (params) => {
+      
+      return (
+        <Fragment>
+          
+            { 
+             <Button
+              variant='contained'
+              disabled={params.row.orderStatus === "Delivered"}
+
+            onClick={() =>{
+              const myForm = new FormData();
+
+              
+              const data = {
+                "status": "Delivered",
+                "shipperid": currentUser?._id,
+              }
+          
+              dispatch(updateOrder(params.id, data));
+  
+              dispatch(getAllOrders())
+             
+            }}
+          >
+           {params.row.orderStatus === "Delivered"? "delivered" : "deliver"}
+          </Button>
+    }
+        </Fragment>
+      );
+    },
+  }
+];
+
+
+
+
+
 
 let newfilteredOrders=[];
 
@@ -363,14 +455,27 @@ const handleClick = ()=>{
 
 }
 
+let accpetedrows=[];
+
+accpetedOrders && accpetedOrders.forEach((item) => {
+   accpetedrows.push({
+     id:item._id,
+  address: item.shippingInfo.address,
+  city:item.shippingInfo.city,
+  itemsQty: item.orderItems.length,
+  shippingPrice: item.shippingPrice,
+  TotalPrice: item.totalPrice,
+  orderStatus:item.orderStatus,})});
 
 
 
-const rows =[];
 
-if(filteredOrders.length!=0){
-  filteredOrders.forEach((item) => {
-    rows.push({
+
+let notAcceptedRows =[];
+
+if(filteredOrders.length!=0 ){
+  filteredOrders.foreach((item) => {
+    notAcceptedRows.push({
       id:item._id,
       address: item.shippingInfo.address,
       city:item.shippingInfo.city,
@@ -383,9 +488,9 @@ if(filteredOrders.length!=0){
 }
 else{
 
-orders &&
-orders.forEach((item) => {
-  rows.push({
+notAcceptedOrders &&
+notAcceptedOrders.forEach((item) => {
+  notAcceptedRows.push({
     id:item._id,
     address: item.shippingInfo.address,
     city:item.shippingInfo.city,
@@ -400,7 +505,7 @@ orders.forEach((item) => {
 
 
 
-console.log("Rows",rows)
+
 
 
     
@@ -448,16 +553,29 @@ const onSelectChange = (event, values)=>{
 
 </div>
 
-<div className="ordertableContainer">
+<div className="ordertableContainer"> All Orders
 <DataGrid
-            rows={rows}
-            columns={columns}
-            
+            rows={notAcceptedRows}
+            columns={notAcceptedColumns}
+            pageSize={5}
             disableSelectionOnClick
             className="ordersListTable"
             autoHeight
+            
           />
 </div>
+<div className='ordertableContainer'>My Accepted Orders</div> 
+
+    <DataGrid 
+    rows={accpetedrows}
+    columns={acceptedColumns}
+    pageSize={5}
+    disableSelectionOnClick
+    className="ordersListTable"
+    autoHeight
+    
+    />
+
        </>
   )
 }
