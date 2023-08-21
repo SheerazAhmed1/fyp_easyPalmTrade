@@ -6,6 +6,8 @@ const { response } = require("express");
 const sendEmail=require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary=require("cloudinary");
+const Token=require("../models/token");
+
 //Register a User
 
 exports.registerUser= catchAsyncErrors(async(req,res,next)=>{
@@ -16,8 +18,11 @@ exports.registerUser= catchAsyncErrors(async(req,res,next)=>{
     crop:"scale",
   });
   const {name,email,password, role}=req.body;
+
+    const user= await User.findOne({email: email});
+
     
-    const user=await User.create({
+     user=await User.create({
         name,
         email,
         password,
