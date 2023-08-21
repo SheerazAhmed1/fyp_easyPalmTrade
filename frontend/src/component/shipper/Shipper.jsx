@@ -441,12 +441,12 @@ let newfilteredOrders=[];
 
 const handleClick = ()=>{
 
+ 
+
+  const filteredOrders = notAcceptedOrders.filter((order) => select.toString().toLowerCase().includes(order.shippingInfo.city.toLowerCase()));
 
 
-  const filteredOrders = orders.filter((order) => select.toString().toLowerCase().includes(order.shippingInfo.city.toLowerCase()));
-
-
-    setFilteredOrders(filteredOrders);
+  setFilteredOrders(filteredOrders);
 
  console.log("filtered orders using state :",filteredOrders);
   
@@ -474,7 +474,8 @@ accpetedOrders && accpetedOrders.forEach((item) => {
 let notAcceptedRows =[];
 
 if(filteredOrders.length!=0 ){
-  filteredOrders.foreach((item) => {
+  console.log("filteredORders",filteredOrders);
+  filteredOrders?.forEach((item) => {
     notAcceptedRows.push({
       id:item._id,
       address: item.shippingInfo.address,

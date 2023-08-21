@@ -8,7 +8,7 @@ import { getBiddingDetails } from "../../actions/biddingAction";
 import { getProductDetails } from "../../actions/productAction";
 import { getAllUsers } from "../../actions/userActions";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Card } from "@mui/material";
+import { Button, Card, Chip } from "@mui/material";
 import AuctionCard from "./AuctionCard";
 
 const BiddingItemLoader = () => {
@@ -188,6 +188,26 @@ const BiddingItem = ({biddingDetails, product, currentUser, allUsers}) => {
         type: "number",
         minWidth: 270,
         flex: 0.5,
+      },
+      {
+        field: "status",
+        flex: 0.3,
+        headerName: "Status",
+        minWidth: 150,
+        sortable: false,
+        renderCell: (params) => {
+          return (
+            <>
+
+            <Chip 
+            size="medium" 
+            label={accepted == params.row.id ? "Accepted" : "Rejected"}
+                  color={accepted == params.row.id ? "success" : "error"}
+            />
+              
+            </>
+          );
+        },
       },
     ];
   }
