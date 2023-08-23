@@ -1,10 +1,11 @@
 const express=require('express');
 const router=express.Router();
 const {registerUser, loginUser,logout, forgotPassword
-    ,resetPassword, getUserDetails, updatePassword, updateProfile, 
-    getAllUser, getSingleUser, updateUserRole, deleteUser} = require("../controllers/userController");
+    ,resetPassword, getUserDetails, updatePassword, updateProfile,
+    getAllUser, getSingleUser, updateUserRole, deleteUser,verifyUser} = require("../controllers/userController");
 const {isAuthenticatedUser,authorizeRoles} = require("../middleware/auth");
-
+const User = require('../models/userModel');
+const Token=require("../models/token");
 
 
 
@@ -30,11 +31,10 @@ router.route("/me/update").put(isAuthenticatedUser,updateProfile);
 router.route("/admin/users").get(isAuthenticatedUser,authorizeRoles("admin","buyer","seller"),getAllUser);
 
 router.route("/admin/user/:id").get(isAuthenticatedUser,authorizeRoles("admin"),getSingleUser)
-.put(isAuthenticatedUser,authorizeRoles("admin"),updateUserRole)
-.delete(isAuthenticatedUser,authorizeRoles("admin"),deleteUser);
+    .put(isAuthenticatedUser,authorizeRoles("admin"),updateUserRole)
+    .delete(isAuthenticatedUser,authorizeRoles("admin"),deleteUser);
 
-
-
+router.route("/users/:id/verify/:token").get(verifyUser);
 
 
 

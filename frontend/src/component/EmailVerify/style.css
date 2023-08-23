@@ -1,0 +1,20 @@
+.container{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.greenbtn{
+    border:none;
+    outline:none;
+    padding: 12px;
+    background-color: rgb(83, 136, 136);
+    border-radius: 20px;
+    width: 120px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}

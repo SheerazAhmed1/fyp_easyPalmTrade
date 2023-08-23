@@ -8,7 +8,7 @@ const tokenSchema = new Schema({
         ref:"userModel",
         unique:true
     },
-    toke:{
+    token:{
         type:String,
         required:true
     },

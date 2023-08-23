@@ -42,6 +42,7 @@ import ProductReviews from "./component/Admin/ProductReviews.js";
 import Shipper from "./component/shipper/Shipper.jsx";
 import Bidding from "./component/Bidding/Bidding.jsx";
 import BiddingItem from "./component/Bidding/BiddingItem.jsx";
+import EmailVerify from "./component/EmailVerify/emailVerify.js";
 
 function App() {
 
@@ -64,7 +65,7 @@ const {data} = await axios.get("/api/v1/stripeapikey");
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-    
+
     store.dispatch(loadUser());
     getStripeApiKey();
   },[])
@@ -92,6 +93,7 @@ const {data} = await axios.get("/api/v1/stripeapikey");
     <Route exact path="/password/reset/:token" component={ResetPassword} />
 
     <Route exact path="/login" component={LoginSignUp}/>
+    <Route exact path="/users/:id/verify/:token" component={EmailVerify}/>
 
     <Route exact path="/cart" component={Cart}/>
 
@@ -99,9 +101,9 @@ const {data} = await axios.get("/api/v1/stripeapikey");
     <ProtectedRoute exact path="/shipper" component={Shipper} />
     <Route exact path="/bidding" component={Bidding}/>
     <Route exact path="/bidding/:id" component={BiddingItem}/>
-    
 
-    
+
+
 
     {
       stripeApiKey && (
@@ -131,7 +133,7 @@ const {data} = await axios.get("/api/v1/stripeapikey");
 
     <ProtectedRoute isAdmin={true} exact path="/admin/orders" component={OrderList} />
     <ProtectedRoute isAdmin={true} exact path="/admin/order/:id" component={ProcessOrder} />
-    
+
     <ProtectedRoute isAdmin={true} exact path="/admin/users" component={UsersList} />
 
     <ProtectedRoute isAdmin={true} exact path="/admin/user/:id" component={UpdateUser} />

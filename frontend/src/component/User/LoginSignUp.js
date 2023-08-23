@@ -28,7 +28,7 @@ const LoginSignUp = ({history,location}) => {
         email:"",
         password:"",
     });
-
+    const [msg,setmsg] = useState("");
     const selectRoleRef = useRef(null);
 
     const {name,email,password} = user;
@@ -40,79 +40,80 @@ const LoginSignUp = ({history,location}) => {
         e.preventDefault();
         dispatch(login(loginEmail,loginPassword));
     }
-    
+
     const registerSubmit = (e) => {
         e.preventDefault();
-        
+
         const userRole = selectRoleRef.current.value;
-       
+
         const myForm = new FormData();
-        
-    //     const formData = {
-    //         "name": name,
-    //     "email": email,
-    //     "password": password,
-    //     "avatar": avatar,
-    //     "role": userRole
-    // }
+
+        //     const formData = {
+        //         "name": name,
+        //     "email": email,
+        //     "password": password,
+        //     "avatar": avatar,
+        //     "role": userRole
+        // }
         myForm.set("role", userRole);
         myForm.set("name", name);
         myForm.set("email", email);
         myForm.set("password", password);
         myForm.set("avatar", avatar);
         myForm.set("role", userRole);
-        
-        dispatch(register(myForm));
-      };
 
-      const registerDataChange = (e) => {
+        dispatch(register(myForm));
+        setmsg("A verification mail is sent to your email account Please Verify");
+    };
+
+    const registerDataChange = (e) => {
         if(e.target.name === "avatar"){
-                const reader = new FileReader();
-                reader.onload =()=>{
-                    if(reader.readyState===2){
-                        setAvatarPreview(reader.result);
-                        setAvatar(reader.result);
-                    }
+            const reader = new FileReader();
+            reader.onload =()=>{
+                if(reader.readyState===2){
+                    setAvatarPreview(reader.result);
+                    setAvatar(reader.result);
                 }
-                reader.readAsDataURL(e.target.files[0]);
+            }
+            reader.readAsDataURL(e.target.files[0]);
         }
         else{
             setUser({...user,[e.target.name]:e.target.value})
         }
-      }
+    }
 
-      const redirect=location.search?location.search.split("=")[1]: "/";
-      const role = useSelector((state)=>state?.user?.user?.role);
+    const redirect=location.search?location.search.split("=")[1]: "/";
+    const role = useSelector((state)=>state?.user?.user?.role);
 
-      useEffect(() => {
-        
-      if(error){
-        alert.error(error);
-        dispatch(clearErrors());
-      }
-      
-      if(isAuthenticated){
-        if(role ==="shipper" && role!==undefined){
-            history.push("/shipper");
+    useEffect(() => {
+
+        if(error){
+            alert.error(error);
+            dispatch(clearErrors());
         }
-        else{
-            history.push(redirect)
+
+        if(isAuthenticated){
+            if(role ==="shipper" && role!==undefined){
+                history.push("/shipper");
+            }
+            else{
+                history.push(redirect)
+            }
+
+
+
         }
-        
-        
 
-      }
+    }, [dispatch,error,alert,history,isAuthenticated,redirect]);
 
-      }, [dispatch,error,alert,history,isAuthenticated,redirect]);
-      
 
     const switchTabs=(e,tab)=>{
         if(tab==="login"){
-        switcherTab.current.classList.add("shiftToNeutral");
-        switcherTab.current.classList.remove("shiftToRight");
+            switcherTab.current.classList.add("shiftToNeutral");
+            switcherTab.current.classList.remove("shiftToRight");
 
-        registerTab.current.classList.remove("shiftToNeutralForm");
-        loginTab.current.classList.remove("shiftToLeft");
+            registerTab.current.classList.remove("shiftToNeutralForm");
+            loginTab.current.classList.remove("shiftToLeft");
         }
         if(tab==="register"){
             switcherTab.current.classList.add("shiftToRight");
@@ -123,117 +124,118 @@ const LoginSignUp = ({history,location}) => {
         }
     };
 
-  return (
-   <Fragment>
-    {loading?<Loader />:(
-         <Fragment>
-         <div className='LoginSignUpContainer'>
-             <div className='LoginSignUpBox'>
-                 <div>
-                     <div className='login_signUp_toggle'>
-                         <p onClick={(e)=>switchTabs(e,"login")}>LOGIN</p>
-                         <p onClick={(e)=>switchTabs(e,"register")}>REGISTER</p>
-                     </div>
-                     <button ref={switcherTab}></button>
-                 </div>
-                 <form className='loginForm' ref={loginTab} onSubmit={loginSubmit}>
-                     <div className='loginEmail'>
-                         <CgMail/>
-                         <input 
-                         type="email" 
-                         placeholder='Email'
-                          required 
-                          value={loginEmail}
-                          onChange={(e)=>setLoginEmail(e.target.value)}
-                         />
- 
-                         
-                     </div>
-                     <div className='loginPassword'>
-                         <CgLock/>
-                         <input
-                         type="password"
-                         placeholder='Password'
-                         required
-                         value={loginPassword}
-                         onChange={(e)=>setLoginPassword(e.target.value)}
-                         />
-                     </div>
-                     <Link to="/password/forgot">Forgot Password?</Link>
-                     <input type="submit" value="Login" className='loginBtn'/>
-                 </form>
- 
-                 <form
-                 className='signUpForm'
-                 ref={registerTab}
-                 encType="multipart/form-data"
-                 onSubmit={registerSubmit}>
- 
-                     <div className='signUpName'>
-                         <MdFace/>
-                         <input
-                         type="text"
-                         placeholder='Name'
-                         required
-                         name="name"
-                         value={name}
-                         onChange={registerDataChange}
-                         />
-                     </div>
-                     <div className='signUpEmail'>
-                         <CgMail/>
-                         <input
-                         type="email"
-                         placeholder='Email'
-                         required
-                         name="email"
-                         value={email}
-                         onChange={registerDataChange}
-                         />
-                     </div>
-                     <div className='signUpPassword'>
-                         <CgLock/>
-                         <input
-                         type="password"
-                         placeholder='Password'
-                         required
-                         name="password"
-                         value={password}
-                         onChange={registerDataChange}
-                         />
-                     </div>
-                    <div className='signUpRole'>
-                    <p>Register as:</p>
-                    <select defaultValue='buyer' ref={selectRoleRef}>
-                        <option value="buyer">Buyer</option>
-                        <option value="seller">Seller</option>
-                        <option value="shipper">Shipper</option>
-                    </select>
+    return (
+        <Fragment>
+            {loading?<Loader />:(
+                <Fragment>
+                    <div className='LoginSignUpContainer'>
+                        <div className='LoginSignUpBox'>
+                            <div>
+                                <div className='login_signUp_toggle'>
+                                    <p onClick={(e)=>switchTabs(e,"login")}>LOGIN</p>
+                                    <p onClick={(e)=>switchTabs(e,"register")}>REGISTER</p>
+                                </div>
+                                <button ref={switcherTab}></button>
+                            </div>
+                            <form className='loginForm' ref={loginTab} onSubmit={loginSubmit}>
+                                <div className='loginEmail'>
+                                    <CgMail/>
+                                    <input
+                                        type="email"
+                                        placeholder='Email'
+                                        required
+                                        value={loginEmail}
+                                        onChange={(e)=>setLoginEmail(e.target.value)}
+                                    />
+
+
+                                </div>
+                                <div className='loginPassword'>
+                                    <CgLock/>
+                                    <input
+                                        type="password"
+                                        placeholder='Password'
+                                        required
+                                        value={loginPassword}
+                                        onChange={(e)=>setLoginPassword(e.target.value)}
+                                    />
+                                </div>
+                                <Link to="/password/forgot">Forgot Password?</Link>
+                                <input type="submit" value="Login" className='loginBtn'/>
+                            </form>
+
+                            <form
+                                className='signUpForm'
+                                ref={registerTab}
+                                encType="multipart/form-data"
+                                onSubmit={registerSubmit}>
+
+                                <div className='signUpName'>
+                                    <MdFace/>
+                                    <input
+                                        type="text"
+                                        placeholder='Name'
+                                        required
+                                        name="name"
+                                        value={name}
+                                        onChange={registerDataChange}
+                                    />
+                                </div>
+                                <div className='signUpEmail'>
+                                    <CgMail/>
+                                    <input
+                                        type="email"
+                                        placeholder='Email'
+                                        required
+                                        name="email"
+                                        value={email}
+                                        onChange={registerDataChange}
+                                    />
+                                </div>
+                                <div className='signUpPassword'>
+                                    <CgLock/>
+                                    <input
+                                        type="password"
+                                        placeholder='Password'
+                                        required
+                                        name="password"
+                                        value={password}
+                                        onChange={registerDataChange}
+                                    />
+                                </div>
+                                <div className='signUpRole'>
+                                    <p>Register as:</p>
+                                    <select defaultValue='buyer' ref={selectRoleRef}>
+                                        <option value="buyer">Buyer</option>
+                                        <option value="seller">Seller</option>
+                                        <option value="shipper">Shipper</option>
+                                    </select>
+                                </div>
+                                <div id="registerImage">
+                                    <img src={avatarPreview} alt="Avatar Preview"/>
+                                    <input
+                                        type="file"
+                                        name="avatar"
+                                        accept="image/*"
+                                        onChange={registerDataChange}
+                                    />
+                                </div>
+
+                                <input
+                                    type="submit"
+                                    value="Register"
+                                    className='signUpBtn'
+
+                                />
+                                {msg && <div className='successMsg'>{msg}</div>}
+                            </form>
+
+                        </div>
                     </div>
-                     <div id="registerImage">
-                         <img src={avatarPreview} alt="Avatar Preview"/>
-                         <input
-                         type="file"
-                         name="avatar"
-                         accept="image/*"
-                         onChange={registerDataChange}
-                         />
-                     </div>
-                     
-                     <input
-                     type="submit"
-                     value="Register"
-                     className='signUpBtn'
-                     
-                     />
-                 </form>
- 
-             </div>
-         </div>
-     </Fragment>
-    )}
-   </Fragment>
-  )
+                </Fragment>
+            )}
+        </Fragment>
+    )
 }
 
 export default LoginSignUp
