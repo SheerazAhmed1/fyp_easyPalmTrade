@@ -11,7 +11,7 @@
     height: 100%;
   }
   
-  .paymentForm > p {
+  .paymentForm > .onlinepaymentdiv  p {
     font: 400 2vmax "Roboto";
     color: rgba(0, 0, 0, 0.753);
     border-bottom: 1px solid rgba(0, 0, 0, 0.13);
@@ -21,13 +21,14 @@
     margin: auto;
   }
   
-  .paymentForm > div {
+  .paymentForm> .onlinepaymentdiv > div {
     display: flex;
     align-items: center;
     margin: 2vmax 0;
   }
   
   .paymentInput {
+    
     padding: 1vmax 4vmax;
     padding-right: 1vmax;
     width: 100%;
@@ -37,7 +38,7 @@
     outline: none;
   }
   
-  .paymentForm > div > svg {
+  .paymentForm > .onlinepaymentdiv > div > svg {
     position: absolute;
     transform: translateX(1vmax);
     font-size: 1.6vmax;
@@ -59,7 +60,20 @@
   .paymentFormBtn:hover {
     background-color: rgb(179, 66, 46);
   }
+
+  .paymentMethodSelection{
+    display: flex;
+    border: 3px solid ;
+    border-color: rgba(0, 0, 0, 0.623);
+    border-radius: 5px;
+    padding: 4px;
+    padding-left: 15px;
+    justify-content:space-around;
+  }
   
+  #codbtn{
+    margin-top: 15px;
+  }
   @media only screen and (max-width: 1080px) {
     .paymentForm {
       width: 90%;
