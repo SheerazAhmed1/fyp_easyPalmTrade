@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -77,6 +77,10 @@ const AuctionCard = ({ productId, name, description, bidAmount, bidExpiryTime, i
       alert.info("Bid should be greater then Current Bid");
     }
   };
+
+  useEffect(()=>{
+
+  },[dispatch,alert]);
 
   return (
     <Card style={styles.card}>
