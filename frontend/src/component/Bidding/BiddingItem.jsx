@@ -35,12 +35,13 @@ const BiddingItemLoader = () => {
     if (allUsers.users.length === 0) {
       dispatch(getAllUsers());
     }
+    
   }, [dispatch,]);
 
 
   const isLoading = pLoading || bLoading;
   if (isLoading) {
-    return <p>Loading...</p>;
+    
   }
 
   return <BiddingItem biddingDetails={biddingDetails} product={product} currentUser={currentUser} allUsers={allUsers}/>;
@@ -70,6 +71,10 @@ const BiddingItem = ({biddingDetails, product, currentUser, allUsers}) => {
     );
     biddersInfo.push({ ...productBidder, ...bidder });
   });
+
+  useEffect(() => {
+    setAccepted(bidAccepted);
+  },[product._id]);
 
  
   //Accept Bid Functionality
@@ -201,8 +206,9 @@ const BiddingItem = ({biddingDetails, product, currentUser, allUsers}) => {
 
             <Chip 
             size="medium" 
-            label={accepted == params.row.id ? "Accepted" : "Rejected"}
-                  color={accepted == params.row.id ? "success" : "error"}
+            label={accepted==null ? "Pending" :
+             accepted == params.row.id ? "Accepted" : "Rejected"}
+                  color={accepted == null ? "info" : accepted == params.row.id ? "success" : "error"}
             />
               
             </>
